@@ -2,52 +2,124 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Krisishikkha | Agriculture Learning</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Krisishikkha provides structured agricultural study notes for students, educators, and job aspirants.">
+<title>Secure PDF Viewer | krisishikkha.com</title>
 
-<link rel="stylesheet" href="assets/css/app.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
 
-<!-- Google AdSense -->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" crossorigin="anonymous"></script>
+<style>
+    body {
+        margin: 0;
+        background: #0f172a;
+        font-family: Arial, sans-serif;
+        overflow-x: hidden;
+        color: #fff;
+    }
+
+    #viewer {
+        position: relative;
+        max-width: 900px;
+        margin: auto;
+        padding: 20px;
+    }
+
+    canvas {
+        display: block;
+        margin: 0 auto 20px;
+        box-shadow: 0 0 15px rgba(0,0,0,.6);
+        background: #fff;
+    }
+
+    /* Watermark */
+    .watermark {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        background-image: repeating-linear-gradient(
+            -30deg,
+            rgba(0,0,0,0.08),
+            rgba(0,0,0,0.08) 1px,
+            transparent 1px,
+            transparent 120px
+        );
+        z-index: 9999;
+    }
+
+    .watermark span {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(-30deg);
+        font-size: 32px;
+        font-weight: bold;
+        color: rgba(0,0,0,0.15);
+        white-space: nowrap;
+    }
+
+    /* Disable selection */
+    body {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+    }
+</style>
 </head>
-<body>
 
-<header>
-  <div class="logo">🌾 Krisishikkha</div>
-  <nav>
-    <a href="/">Home</a>
-    <a href="pages/categories/agriculture.html">Agriculture</a>
-    <a href="pages/categories/science.html">Science</a>
-    <a href="about.html">About</a>
-    <a href="contact.html">Contact</a>
-  </nav>
-</header>
+<body oncontextmenu="return false">
 
-<main class="container">
-  <section class="card">
-    <h1>Agriculture Education, Simplified</h1>
-    <p>Access structured agricultural notes securely. Read online, learn effectively, stay academically honest.</p>
-    <a class="btn" href="pages/notes/index.html">Browse Notes</a>
-  </section>
+<div id="viewer"></div>
 
-  <section class="card">
-    <ins class="adsbygoogle"
-      style="display:block"
-      data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-      data-ad-slot="XXXXXXXXXX"
-      data-ad-format="auto"></ins>
-    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-  </section>
-</main>
+<div class="watermark">
+    <span>fb:@krisishikkha.com</span>
+</div>
 
-<footer>
-  <p>© 2026 Krisishikkha.com</p>
-  <p>
-    <a href="privacy-policy.html">Privacy Policy</a> ·
-    <a href="terms.html">Terms</a>
-  </p>
-</footer>
+<!-- PDF.js -->
+<script src="../vendor/pdfjs/pdf.min.js"></script>
+
+<script>
+const url = "../pdf/notes.pdf"; // PDF location
+
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+    "../vendor/pdfjs/pdf.worker.min.js";
+
+const viewer = document.getElementById("viewer");
+const scale = 1.4;
+
+pdfjsLib.getDocument(url).promise.then(pdf => {
+    for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+        pdf.getPage(pageNum).then(page => {
+            const viewport = page.getViewport({ scale });
+            const canvas = document.createElement("canvas");
+            const context = canvas.getContext("2d");
+
+            canvas.width = viewport.width;
+            canvas.height = viewport.height;
+
+            viewer.appendChild(canvas);
+
+            page.render({
+                canvasContext: context,
+                viewport: viewport
+            });
+        });
+    }
+});
+
+// Disable keyboard shortcuts
+document.addEventListener("keydown", function (e) {
+    if (
+        (e.ctrlKey && e.key === "s") ||
+        (e.ctrlKey && e.key === "p") ||
+        (e.ctrlKey && e.key === "u")
+    ) {
+        e.preventDefault();
+        alert("Action disabled");
+    }
+});
+</script>
 
 </body>
 </html>
