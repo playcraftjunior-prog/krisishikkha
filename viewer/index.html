@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Secure PDF Viewer | Krisishikkha</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<link rel="stylesheet" href="../assets/css/app.css">
+<script src="../vendor/pdfjs/pdf.min.js"></script>
+</head>
+<body>
+
+<header>
+  <div class="logo">📄 Secure Viewer</div>
+</header>
+
+<div class="viewer-wrapper">
+  <aside class="page-nav" id="pageNav"></aside>
+  <main id="pdfContainer"></main>
+</div>
+
+<div class="zoom-controls">
+  <button id="zoomOut">-</button>
+  <span id="zoomValue">1.2x</span>
+  <button id="zoomIn">+</button>
+</div>
+
+<script src="../assets/js/access-control.js"></script>
+<script src="../assets/js/viewer-multipage.js"></script>
+</body>
+</html>
