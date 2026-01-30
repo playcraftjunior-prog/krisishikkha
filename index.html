@@ -1,115 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Secure PDF Viewer | krisishikkha.com</title>
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="noindex,nofollow">
-
-<style>
-    body {
-        margin: 0;
-        background: #0f172a;
-        font-family: Arial, sans-serif;
-        overflow-x: hidden;
-        color: #fff;
-    }
-
-    #viewer {
-        position: relative;
-        max-width: 900px;
-        margin: auto;
-        padding: 20px;
-    }
-
-    canvas {
-        display: block;
-        margin: 0 auto 20px;
-        box-shadow: 0 0 15px rgba(0,0,0,.6);
-        background: #fff;
-    }
-
-    /* Watermark */
-    .watermark {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        background-image: repeating-linear-gradient(
-            -30deg,
-            rgba(0,0,0,0.08),
-            rgba(0,0,0,0.08) 1px,
-            transparent 1px,
-            transparent 120px
-        );
-        z-index: 9999;
-    }
-
-    .watermark span {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) rotate(-30deg);
-        font-size: 32px;
-        font-weight: bold;
-        color: rgba(0,0,0,0.15);
-        white-space: nowrap;
-    }
-
-    /* Disable selection */
-    body {
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
-    }
-</style>
+  <meta charset="UTF-8">
+  <title>Krisishikkha – Agriculture Notes & Jobs</title>
+  <meta name="description" content="Krisishikkha provides agriculture notes, jobs preparation PDFs and educational resources.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="assets/css/app.css">
 </head>
+<body>
 
-<body oncontextmenu="return false">
+<header>
+  <h1>Krisishikkha.com</h1>
+  <nav>
+    <a href="/">Home</a>
+    <a href="pages/categories/agriculture.html">Agriculture</a>
+    <a href="pages/categories/jobs.html">Jobs</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
 
-<div id="viewer"></div>
+<main>
+  <section>
+    <h2>Agriculture Notes & PDFs</h2>
+    <p>High-quality agriculture notes for students and job candidates.</p>
+    <a href="pages/notes/index.html">View All Notes</a>
+  </section>
 
-<div class="watermark">
-    <span>fb:@krisishikkha.com</span>
-</div>
+  <!-- AdSense safe placement -->
+  <section class="ad-box">
+    <!-- Google AdSense code here -->
+  </section>
+</main>
 
-<!-- PDF.js -->
-<script src="../vendor/pdfjs/pdf.min.js"></script>
+<footer>
+  <p>© 2026 Krisishikkha.com</p>
+</footer>
 
-<script>
-const url = "../pdf/notes.pdf"; // PDF location
-
-pdfjsLib.GlobalWorkerOptions.workerSrc =
-    "../vendor/pdfjs/pdf.worker.min.js";
-
-const viewer = document.getElementById("viewer");
-const scale = 1.4;
-
-pdfjsLib.getDocument(url).promise.then(pdf => {
-    for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
-        pdf.getPage(pageNum).then(page => {
-            const viewport = page.getViewport({ scale });
-            const canvas = document.createElement("canvas");
-            const context = canvas.getContext("2d");
-
-            canvas.width = viewport.width;
-            canvas.height = viewport.height;
-
-            viewer.appendChild(canvas);
-
-            page.render({
-                canvasContext: context,
-                viewport: viewport
-            });
-        });
-    }
-});
-
-// Disable keyboard shortcuts
-document.addEventListener("keydown", function (e) {
+</body>
+</html>document.addEventListener("keydown", function (e) {
     if (
         (e.ctrlKey && e.key === "s") ||
         (e.ctrlKey && e.key === "p") ||
